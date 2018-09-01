@@ -1,0 +1,257 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+
+
+	 <meta charset="UTF-8"/>
+     <title>GameStop</title>
+     <style type="text/css">
+		   
+        body {
+               background: url(90274-OJGIE0-202.jpg) no-repeat center top fixed;
+               -webkit-background-size: cover;
+               -moz-background-size: cover;
+               -o-background-size: cover;
+               background-size: cover;
+               }
+
+
+
+     .menu  ul li {  
+            width:200px;
+            height:40px;
+            display:inline-block;
+            text-align: center;
+            line-height: 40px;
+            font-size:23px;						 
+                  border-radius:4px;
+                  padding :5px 7px;
+      padding-top:3%;
+               
+
+               }
+           .menu {            
+           margin-top: 40px;
+           }
+.menu ul {
+padding: 0;
+margin-bottom: 40px;
+}
+        
+        
+        .menu .btn-primary {					
+        background-color:#969595;
+        border : none;											 
+        }                
+
+.container{
+background-color: rgba(255,255,255,0.7);
+padding: 35px 20px 30px 20px;
+border-radius: 10px;
+margin-bottom: 40px;
+}         
+
+.container ul li {
+     width : 100%;
+     height: 70%
+            } 
+
+input[type="submit"]:hover {
+background-color: #da251b;
+}
+input[type="submit"] {
+background-color: #ee2e24;
+color: #fff;
+border: none;
+padding: 10px 40px;
+border-radius: 6px;
+margin-top: 20px;
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 1px;
+transition: background-color .3s;
+}
+
+@media (max-width: 420px) {
+.menu ul li {
+   width: 90%;
+}
+.btn {
+   width: 100%;
+}
+.logo {
+   width: 100%;
+   height: auto;
+   padding: 20px;
+   margin-bottom: -40px;
+}
+}
+</style>
+ 
+</head>
+<body>
+
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+
+    <!-- Adicionando Javascript -->
+    <script type="text/javascript" >
+
+        $(document).ready(function() {
+
+            function limpa_formulário_cep() {
+                // Limpa valores do formulário de cep.
+                $("#rua").val("");
+                $("#bairro").val("");
+                $("#cidade").val("");
+                $("#uf").val("");
+                $("#ibge").val("");
+            }
+            
+            //Quando o campo cep perde o foco.
+            $("#cep").blur(function() {
+
+                //Nova variável "cep" somente com dígitos.
+                var cep = $(this).val().replace(/\D/g, '');
+
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+
+                    //Valida o formato do CEP.
+                    if(validacep.test(cep)) {
+
+                        //Preenche os campos com "..." enquanto consulta webservice.
+                        $("#rua").val("...");
+                        $("#bairro").val("...");
+                        $("#cidade").val("...");
+                        $("#uf").val("...");
+                        $("#ibge").val("...");
+
+                        //Consulta o webservice viacep.com.br/
+                        $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                            if (!("erro" in dados)) {
+                                //Atualiza os campos com os valores da consulta.
+                                $("#rua").val(dados.logradouro);
+                                $("#bairro").val(dados.bairro);
+                                $("#cidade").val(dados.localidade);
+                                $("#uf").val(dados.uf);
+                                $("#ibge").val(dados.ibge);
+                            } //end if.
+                            else {
+                                //CEP pesquisado não foi encontrado.
+                                limpa_formulário_cep();
+                                alert("CEP não encontrado.");
+                            }
+                        });
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulário_cep();
+                        alert("Formato de CEP inválido.");
+                    }
+                } //end if.
+                else {
+                    //cep sem valor, limpa formulário.
+                    limpa_formulário_cep();
+                }
+            });
+        });
+
+    </script>
+
+   <div id="corpo">
+
+          <center>
+             <img class="logo" align="middle" width="500px" height="100px" src="GameStopLogo_BlackRed.png"/>
+          </center>
+    </div>
+
+
+
+  <center><nav class="menu">
+    <ul>		
+        <li><a href="Home.html" class="btn btn-primary" ><b>Home</b></a></li>  
+        <li><a href="Index_cadastro.html" class="btn btn-primary" ><b>Cadastro</b></a></li>  
+        <li><a href="Produto.html" class="btn btn-primary" ><b>Produto</b></a></li>          		
+		 
+    </ul>
+    </nav>
+	</center>
+	
+ 
+  
+  <div class="container">
+  
+  
+    <div id="divesq" class="col-md-6">
+  
+          <div class="form-group">
+             <label for="nome"><b>Nome:</b></label>
+                 <input type="text" class="form-control" name="nome" required placeholder="João"> 
+          </div> 
+	    
+         	 
+	  <div class="form-group">	 
+             <label for="cpf"><b>CPF:</b></label>
+                 <input type="text" name="cpf" placeholder="000.000.000-00" class="form-control"
+                 pattern="^[0-9]{3}.?[0-9]{3}.?[0-9]{3}-?[0-9]{2}">
+          </div>
+
+      
+         <div class="form-group">  
+            <label for="telefone"><b>Telefone:</b></label>
+                <input type="tel" class="form-control" name="telefone" class="form-control" placeholder="(19) 9 0000-0000">
+         </div>
+     
+
+	 <div class="form-group"> 
+            <label for="email"><b>Email:</b></label>
+               <input type="email" name="email" class="form-control" placeholder="exemplo@exemplo.com">
+         </div>  
+         
+         
+     </div> 
+
+    <div id="divdir" class="col-md-6">
+	 
+            <div class="form-group">
+               <label for="CEP"><b>CEP:</b></label>
+                   <input type="text" ID="cep"  name="CEP" placeholder="00000-000" class="form-control"
+                   pattern="[0-9]{5}-?[0-9]{3}">                   
+            </div>    
+       
+	 <div class="form-group">
+            <label for="rua"><b>Rua:</b></label>
+               <input type="rua" ID="rua" name="rua" class="form-control">
+         </div>
+
+        <div class="form-group">
+            <label for="cidade"><b>Cidade:</b></label>
+               <input type="cidade" ID="cidade" name="cidade" class="form-control">
+        </div> 
+        
+        <div class="form-group">
+                <label for="numero"><b>Número</b></label>
+                    <input type="numero" name="numero" class="form-control" placeholder="000">
+
+        </div>	
+        </div>       
+     
+         <div class="text-center">      
+             <input type="submit" value="Cadastrar">          
+        </div>   
+   </div>        
+         
+</body>
+</html>
